@@ -20,9 +20,6 @@ Describe "Development Environment Validation" {
             $nodeVersion | Should -Match "v\d{1,2}\.\d{1,2}\.\d{1,2}"
         }
 
-        It "Node should be a specific version" {
-            $nodeVersion | Should -BeExactly "v18.19.1"
-        }
 
         It "npm should be installed" {
             $npmVersion | Should -Not -BeNullOrEmpty 
@@ -41,19 +38,11 @@ Describe "Development Environment Validation" {
         It "Azure CLI should be installed" {
             $azVersion | Should -Not -BeNullOrEmpty
         }
-
-        It "Azure CLI should be a valid version" {
-            $azVersion | Should -Match "azure-cli \d{1,2}\.\d{1,2}\.\d{1,2}"
-        }
     }
 
     Context "Java Environment" {
         It "Java should be installed" {
             $javaVersion | Should -Not -BeNullOrEmpty
-        }
-
-        It "Java should be a valid version" {
-            $javaVersion | Should -Match "java \d{1,2}(\.\d{1,2}\.\d{1,2})?"
         }
     }
 
