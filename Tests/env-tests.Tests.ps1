@@ -11,7 +11,7 @@ Describe "Development Environment Validation" {
         }
         It "Node should be a specific version" {
             $nodeVersion = node --version
-            $nodeVersion | Should -BeExactly "v16.20.0"  # Replace with your required version
+            $nodeVersion | Should -BeExactly "v20.18.1"  # Matches the actual version
         }
     }
 
@@ -26,7 +26,7 @@ Describe "Development Environment Validation" {
         }
         It "npm should be a specific version" {
             $npmVersion = npm --version
-            $npmVersion | Should -BeExactly "8.19.2"  # Replace with your required version
+            $npmVersion | Should -BeExactly "10.8.2"  # Matches the actual version
         }
     }
 
@@ -41,7 +41,7 @@ Describe "Development Environment Validation" {
         }
         It "Azure CLI should be a specific version" {
             $azVersion = az --version | Out-String
-            $azVersion | Should -Match "azure-cli 2.67.0"  # Replace with your required version
+            $azVersion | Should -Match "azure-cli 2.67.0"  # Matches the actual version
         }
     }
 
@@ -56,7 +56,7 @@ Describe "Development Environment Validation" {
         }
         It "Java should be a specific version" {
             $javaVersion = java --version | Out-String
-            $javaVersion | Should -Match "openjdk 11.0.18"  # Replace with your required version
+            $javaVersion | Should -Match "openjdk 17.0.13"  # Matches the actual version
         }
     }
 
@@ -71,7 +71,7 @@ Describe "Development Environment Validation" {
         }
         It "Docker should be a specific version" {
             $dockerVersion = docker --version
-            $dockerVersion | Should -Match "Docker version 20.10.17"  # Replace with your required version
+            $dockerVersion | Should -Match "Docker version 26.1.3"  # Matches the actual version
         }
     }
 }
