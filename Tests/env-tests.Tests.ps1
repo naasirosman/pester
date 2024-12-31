@@ -37,13 +37,16 @@ Describe "Development Environment Validation" {
         }
         It "Azure CLI should be a valid version" {
             $azVersion = az --version | Out-String
-            $azVersion | Should -Match "azure-cli \d+\.\d+\.\d+" -Because "Azure CLI version format is invalid."
+            # Match the primary Azure CLI version
+            $azVersion | Should -Match "azure-cli\s+\d+\.\d+\.\d+" -Because "Azure CLI version format is invalid."
         }
         It "Azure CLI should be a specific version" {
             $azVersion = az --version | Out-String
-            $azVersion | Should -Match "azure-cli 2.67.0"  # Matches the actual version
+            # Match the specific version
+            $azVersion | Should -Match "azure-cli\s+2\.67\.0" -Because "Azure CLI version does not match the expected value."
         }
     }
+    
 
     Context "Java Environment" {
         It "Java should be installed" {
