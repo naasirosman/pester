@@ -1,33 +1,24 @@
-name: Development Environment Validation
+name: Run Pester Tests
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
-  validate-environment:
+  pester-tests:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    # Checkout the repository
+    - name: Checkout repository
       uses: actions/checkout@v3
 
-    # - name: Install Dependencies
-    #   run: |
-    #     sudo apt-get update
-    #     sudo apt-get install -y nodejs npm
-    #     curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-    #     sudo apt-get install -y azure-cli
-    #     sudo apt-get install -y openjdk-11-jdk docker.io
-
-    - name: Verify Versions
-      run: |
-        node --version
-        npm --version
-        az --version
-        java --version
-        docker --version
-
-    - name: Run Pester Tests
+    # Install Pester
+    - name: Install Pester
       run: |
         pwsh -Command "Install-Module -Name Pester -Force -SkipPublisherCheck -Scope CurrentUser"
-        pwsh -Command "Invoke-Pester -Path ./Tests -Output Detailed"
+        pwsh -Command "Import-Module Pester"
+
+    # Run Pester Tests
+    - name: Run Tests via invoke.ps1
+      run: |
+        pwsh -File ./Tests/invoke.ps1
