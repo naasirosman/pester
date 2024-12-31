@@ -1,35 +1,33 @@
-name: Run Pester Tests
+name: Development Environment Validation
 
 on:
-  workflow_dispatch: # Manual trigger support
+  workflow_dispatch:
 
 jobs:
-  pester-tests:
+  validate-environment:
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout the repository
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v3
 
-    # Install PowerShell
-    - name: Install PowerShell
+    - name: Install Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y wget apt-transport-https software-properties-common
-        wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb" -O packages-microsoft-prod.deb
-        sudo dpkg -i packages-microsoft-prod.deb
-        sudo apt-get update
-        sudo apt-get install -y powershell
-        pwsh --version # Verify installation
+        sudo apt-get install -y nodejs npm
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+        sudo apt-get install -y azure-cli
+        sudo apt-get install -y openjdk-11-jdk docker.io
 
-    # Install Pester
-    - name: Install Pester
+    - name: Verify Versions
       run: |
-        pwsh -Command "Install-Module -Name Pester -Force -SkipPublisherCheck -Scope CurrentUser"
-        pwsh -Command "Import-Module Pester"
+        node --version
+        npm --version
+        az --version
+        java --version
+        docker --version
 
-    # Run Pester Tests
     - name: Run Pester Tests
       run: |
+        pwsh -Command "Install-Module -Name Pester -Force -SkipPublisherCheck -Scope CurrentUser"
         pwsh -Command "Invoke-Pester -Path ./Tests -Output Detailed"
