@@ -1,8 +1,7 @@
 name: Run Pester Tests
 
 on:
-  push:
-    paths: main
+  workflow_dispatch:
 
 jobs:
   pester-tests:
