@@ -1,0 +1,26 @@
+name: Run Pester Tests
+
+on:
+  workflow_dispatch:
+jobs:
+  run-pester-tests:
+    runs-on: windows-latest
+
+    steps:
+    # Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Set up PowerShell
+    - name: Set up PowerShell
+      uses: microsoft/powershell@v1
+
+    # Install Pester
+    - name: Install Pester
+      run: |
+        Install-Module -Name Pester -Force -SkipPublisherCheck -Scope CurrentUser
+
+    # Run Pester Tests
+    - name: Run Pester Tests
+      run: |
+        Invoke-Pester -Path .\Tests -Output Detailed
