@@ -1,7 +1,8 @@
 name: Run Pester Tests
 
 on:
-  workflow_dispatch: # Allows manual triggering
+  push:
+    paths: main
 
 jobs:
   pester-tests:
@@ -12,13 +13,28 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+
     # Install Pester
     - name: Install Pester
       run: |
         pwsh -Command "Install-Module -Name Pester -Force -SkipPublisherCheck -Scope CurrentUser"
         pwsh -Command "Import-Module Pester"
 
-    # Run Pester Tests
-    - name: Run Tests via invoke.ps1
+    # Log Versions of Installed Tools
+    - name: Log Tool Versions
+      run: |
+        echo "Node.js Version:"
+        node --version
+        echo "npm Version:"
+        npm --version
+        echo "Azure CLI Version:"
+        az --version
+        echo "Java Version:"
+        java --version
+        echo "Docker Version:"
+        docker --version
+
+    # Run Pester Tests using invoke.ps1
+    - name: Run Pester Tests
       run: |
         pwsh -File ./Tests/invoke.ps1
